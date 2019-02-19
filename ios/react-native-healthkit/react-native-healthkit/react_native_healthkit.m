@@ -41,7 +41,7 @@ RCT_EXPORT_MODULE(RNHealthKit);
 }
 
 RCT_EXPORT_METHOD(isSupportHealthKit:(RCTResponseSenderBlock)callback){
-    
+
     if([self isSupportHealthKit]){
         callback(@[[NSNull null], @{@"status": @true}]);
     } else {
@@ -51,27 +51,27 @@ RCT_EXPORT_METHOD(isSupportHealthKit:(RCTResponseSenderBlock)callback){
 
 RCT_EXPORT_METHOD(requestPermissions: (NSDictionary *)permissions callback: (RCTResponseSenderBlock)callback){
     if([self isSupportHealthKit]){
-        
+
         NSSet* readDataTypes;
         NSSet* writeDataTypes;
-        
+
         NSArray* readPermissionsArray = [permissions objectForKey:@"read"];
         NSArray* writePermissionsArray = [permissions objectForKey:@"write"];
         NSSet* readPermissions = [HealthKitPermissions getPermissionsFromOptions:readPermissionsArray];
         NSSet* writePermissions = [HealthKitPermissions getPermissionsFromOptions:writePermissionsArray];
-        
+
         if(readPermissions != nil){
             readDataTypes = readPermissions;
         }
-        
+
         if(writePermissions != nil){
             writeDataTypes = writePermissions;
         }
-        
+
         if(!readDataTypes && !writeDataTypes){
             callback(@[[NSNull null], @{@"status": @false, @"reason": @"make sure at 1 read or write permission is provided."}]);
         }
-        
+
         [self.healthStore requestAuthorizationToShareTypes:writeDataTypes readTypes:readDataTypes completion:^(BOOL success, NSError *error) {
             if (!success) {
                 callback(@[[NSNull null], @{@"status": @false, @"reason": error.localizedDescription}]);
@@ -79,34 +79,34 @@ RCT_EXPORT_METHOD(requestPermissions: (NSDictionary *)permissions callback: (RCT
                 callback(@[[NSNull null], @{@"status": @true}]);
             }
         }];
-        
+
     }else{
         callback(@[[NSNull null], @{@"status": @false, @"reason": @"don't support healthkit."}]);
     }
 }
 
-RCT_EXPORT_METHOD(saveHealthData: (NSDictionary *)healthData callback: (RCTResponseSenderBlock)callback){
-    
+RCT_EXPORT_METHOD(saveHealthData: (NSDictionary *)healthData metadata:(NSDictionary*)metadata callback: (RCTResponseSenderBlock)callback){
+
     NSString* type = [healthData objectForKey:@"HKType"];
 
     if ([type isEqualToString:@"Weight"]) {
-        [_healthKitVitals saveWeight:_healthStore healthData:healthData callback:callback];
-        
+        [_healthKitVitals saveWeight:_healthStore healthData:healthData metadata:metadata callback:callback];
+
     } else if([type isEqualToString:@"BloodGlucose"]){
-        [_healthKitVitals saveBloodGlucose:_healthStore healthData:healthData callback:callback];
-        
+        [_healthKitVitals saveBloodGlucose:_healthStore healthData:healthData metadata:metadata callback:callback];
+
     } else if([type isEqualToString:@"OxygenSaturation"]){
-        [_healthKitVitals saveOxygenSaturation:_healthStore healthData:healthData callback:callback];
-        
+        [_healthKitVitals saveOxygenSaturation:_healthStore healthData:healthData metadata:metadata callback:callback];
+
     } else if([type isEqualToString:@"HeartRate"]){
-        [_healthKitVitals saveHeartRate:_healthStore healthData:healthData callback:callback];
-        
+        [_healthKitVitals saveHeartRate:_healthStore healthData:healthData metadata:metadata callback:callback];
+
     } else if([type isEqualToString:@"BloodPressure"]){
-        [_healthKitVitals saveBloodPressure:_healthStore healthData:healthData callback:callback];
-        
+        [_healthKitVitals saveBloodPressure:_healthStore healthData:healthData metadata:metadata callback:callback];
+
     } else if([type isEqualToString:@"BodyTemperature"]){
-        [_healthKitVitals saveBodyTemperature:_healthStore healthData:healthData callback:callback];
-        
+        [_healthKitVitals saveBodyTemperature:_healthStore healthData:healthData metadata:metadata callback:callback];
+
     } else {
         callback(@[[NSNull null], @{@"status": @false, @"reason": @"don't support device type"}]);
     }
@@ -120,5 +120,5 @@ RCT_EXPORT_METHOD(saveHealthData: (NSDictionary *)healthData callback: (RCTRespo
         return false;
     }
 }
-                   
+
 @end

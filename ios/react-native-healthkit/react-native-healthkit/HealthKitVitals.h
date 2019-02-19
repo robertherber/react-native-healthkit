@@ -13,11 +13,11 @@
 
 @interface HealthKitVitals : NSObject
 
--(void)saveWeight:(HKHealthStore*) healthStore healthData:(NSDictionary*)data callback: (RCTResponseSenderBlock)callback;
--(void)saveBloodGlucose:(HKHealthStore*) healthStore healthData:(NSDictionary*)data callback: (RCTResponseSenderBlock)callback;
--(void)saveOxygenSaturation:(HKHealthStore*) healthStore healthData:(NSDictionary*)data callback: (RCTResponseSenderBlock)callback;
--(void)saveBloodPressure:(HKHealthStore*) healthStore healthData:(NSDictionary*)data callback: (RCTResponseSenderBlock)callback;
--(void)saveHeartRate:(HKHealthStore*) healthStore healthData:(NSDictionary*)data callback: (RCTResponseSenderBlock)callback;
--(void)saveBodyTemperature:(HKHealthStore*) healthStore healthData:(NSDictionary*)data callback: (RCTResponseSenderBlock)callback;
+-(void)saveWeight:(HKHealthStore*) healthStore healthData:(NSDictionary*)data metadata:(NSDictionary*)metadata callback: (RCTResponseSenderBlock)callback;
+-(void)saveBloodGlucose:(HKHealthStore*) healthStore healthData:(NSDictionary*)data metadata:(NSDictionary*)metadata callback: (RCTResponseSenderBlock)callback;
+-(void)saveOxygenSaturation:(HKHealthStore*) healthStore healthData:(NSDictionary*)data metadata:(NSDictionary*)metadata callback: (RCTResponseSenderBlock)callback;
+-(void)saveBloodPressure:(HKHealthStore*) healthStore healthData:(NSDictionary*)data metadata:(NSDictionary*)metadata callback: (RCTResponseSenderBlock)callback;
+-(void)saveHeartRate:(HKHealthStore*) healthStore healthData:(NSDictionary*)data metadata:(NSDictionary*)metadata callback: (RCTResponseSenderBlock)callback;
+-(void)saveBodyTemperature:(HKHealthStore*) healthStore healthData:(NSDictionary*)data metadata:(NSDictionary*)metadata callback: (RCTResponseSenderBlock)callback;
 
 @end
