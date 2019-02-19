@@ -1,17 +1,21 @@
-# react-native-healthkit
+# @kingstinct/react-native-healthkit
 
 ## References
 
 Thank this project. I forked some code.
-[https://github.com/terrillo/rn-apple-healthkit/blob/master/README.md]
+[https://github.com/ErlichChen/react-native-healthkit.git]
+[https://github.com/terrillo/rn-apple-healthkit/blob/master/README.md] (originally)
+
+Compared to ErlichChens version I added promise support and metadata support.
+
 
 ## How to install
 
-1. Instal react-native-healthkit package from npm.
+1. Instal @kingstinct/react-native-healthkit package from npm.
 
 ```shell
-npm install react-native-healthkit --save
-react-native link react-native-healthkit
+npm install @kingstinct/react-native-healthkit --save
+react-native link @kingstinct/react-native-healthkit
 ```
 
 2. Update info.plist in your React Native project.
@@ -25,21 +29,19 @@ react-native link react-native-healthkit
 
 3. Enable HealthKit in your React Native project.
 
-## How to use 
+## How to use
 
 ### 1. import package
 
 ```javascript
-import { RNHealthKit } from 'react-native-healthkit';
+import RNHealthKit from '@kingstinct/react-native-healthkit';
 ```
 
 
 ### 2. isSupportHealthKit
 
 ```javascript
-RNHealthKit.isSupportHealthKit((error, events) => {
-    console.log(events);
-})
+const success = await RNHealthKit.isSupportHealthKit()
 ```
 
 ### 3. requestPermissions
@@ -49,9 +51,7 @@ let permissions = {
     read: ['Weight', 'BloodGlucose', 'OxygenSaturation', 'BloodPressureSystolic', 'BloodPressureDiastolic', 'BodyTemperature', 'HeartRate'],
     write: ['Weight', 'BloodGlucose', 'OxygenSaturation', 'BloodPressureSystolic', 'BloodPressureDiastolic', 'BodyTemperature', 'HeartRate'],
 };
-RNHealthKit.requestPermissions(permissions, (error, events) => {
-    console.log(events);
-})
+const success = RNHealthKit.requestPermissions(permissions);
 ```
 
 ### 4. Save health data.
@@ -61,13 +61,11 @@ RNHealthKit.requestPermissions(permissions, (error, events) => {
 ```javascript
 let healthData = {
     HKType: 'Weight',
-    Weight: 160,
-    Date: '2017-12-05 10:10:10',
-    Unit: 'lb'
+    weight: 160,
+    date: '2017-12-05 10:10:10',
+    unit: 'lb'
 }
-RNHealthKit.saveHealthData(healthData, (error, events) => {
-    console.log(events);
-})
+const success = await RNHealthKit.saveHealthData(healthData);
 ```
 
 2. Save health blood glucose
@@ -75,13 +73,11 @@ RNHealthKit.saveHealthData(healthData, (error, events) => {
 ```javascript
 let healthData = {
     HKType: 'BloodGlucose',
-    BloodGlucose: 100,
-    Date: '2017-12-05 10:10:10',
-    Unit: 'mg/dL'
+    bloodGlucose: 100,
+    date: '2017-12-05 10:10:10',
+    unit: 'mg/dL'
 }
-RNHealthKit.saveHealthData(healthData, (error, events) => {
-    console.log(events);
-})
+const success = await RNHealthKit.saveHealthData(healthData);
 ```
 
 3. Save oxygensaturation data
@@ -89,13 +85,11 @@ RNHealthKit.saveHealthData(healthData, (error, events) => {
 ```javascript
 let healthData = {
     HKType: 'OxygenSaturation',
-    OxygenSaturation: 0.99,
-    Date: '2017-12-05 10:10:10',
-    Unit: '%'
+    oxygenSaturation: 0.99,
+    date: '2017-12-05 10:10:10',
+    unit: '%'
 }
-RNHealthKit.saveHealthData(healthData, (error, events) => {
-    console.log(events);
-})
+const success = await RNHealthKit.saveHealthData(healthData);
 ```
 
 4. Save blood pressure data
@@ -103,14 +97,12 @@ RNHealthKit.saveHealthData(healthData, (error, events) => {
 ```javascript
 let healthData = {
     HKType: 'BloodPressure',
-    BloodPressureSystolic: 120,
-    BloodPressureDiastolic: 70,
-    Date: '2017-12-05 10:10:10',
-    Unit: 'mmhg'
+    bloodPressureSystolic: 120,
+    bloodPressureDiastolic: 70,
+    date: '2017-12-05 10:10:10',
+    unit: 'mmhg'
 }
-RNHealthKit.saveHealthData(healthData, (error, events) => {
-    console.log(events);
-})
+const success = await RNHealthKit.saveHealthData(healthData);
 ```
 
 5. Save heart rate data
@@ -118,13 +110,11 @@ RNHealthKit.saveHealthData(healthData, (error, events) => {
 ```javascript
 let healthData = {
     HKType: 'HeartRate',
-    HeartRate: 70,
-    Date: '2017-12-05 10:10:10',
-    Unit: 'cpm'
+    heartRate: 70,
+    date: '2017-12-05 10:10:10',
+    unit: 'cpm'
 }
-RNHealthKit.saveHealthData(healthData, (error, events) => {
-    console.log(events);
-})
+const success = await RNHealthKit.saveHealthData(healthData);
 ```
 
 6. Save body temperature
@@ -132,13 +122,9 @@ RNHealthKit.saveHealthData(healthData, (error, events) => {
 ```javascript
 let healthData = {
     HKType: 'BodyTemperature',
-    BodyTemperature: 20,
-    Date: '2017-12-05 10:10:10',
-    Unit: 'celsius'
+    bodyTemperature: 20,
+    date: '2017-12-05 10:10:10',
+    unit: 'celsius'
 }
-RNHealthKit.saveHealthData(healthData, (error, events) => {
-    console.log(events);
-})
+const success = await RNHealthKit.saveHealthData(healthData);
 ```
-
-## TODO
